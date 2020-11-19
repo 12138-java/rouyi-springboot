@@ -1,0 +1,3 @@
+22:24:48.038 [Thread-41] INFO  sys-user - [shutdownSpringSessionValidationScheduler,45] - ====关闭会话验证任务====
+22:24:48.052 [Thread-41] INFO  sys-user - [shutdownAsyncManager,62] - ====关闭后台任务任务线程池====
+22:24:48.052 [Thread-41] INFO  sys-user - [shutdownEhCacheManager,75] - ====关闭缓存====

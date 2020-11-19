@@ -105,6 +105,11 @@ public class SysUserServiceImpl implements ISysUserService
         return userMapper.selectUserByLoginName(userName);
     }
 
+    @Override
+    public List<SysUser> selectUserByLoginNameLike(String userName) {
+        return userMapper.selectUserByLoginNameLike(userName);
+    }
+
     /**
      * 通过手机号码查询用户
      * 
@@ -280,7 +285,7 @@ public class SysUserServiceImpl implements ISysUserService
     /**
      * 新增用户角色信息
      * 
-     * @param user 用户对象
+     * @param  用户对象
      */
     public void insertUserRole(Long userId, Long[] roleIds)
     {

@@ -1,0 +1,6 @@
+16:01:34.541 [schedule-pool-2] INFO  sys-user - [run,109] - [127.0.0.1]内网IP[admin][Success][登录成功]
+16:05:07.783 [Thread-44] INFO  sys-user - [shutdownSpringSessionValidationScheduler,45] - ====关闭会话验证任务====
+16:05:07.785 [Thread-44] INFO  sys-user - [shutdownAsyncManager,62] - ====关闭后台任务任务线程池====
+16:05:07.786 [Thread-44] INFO  sys-user - [shutdownEhCacheManager,75] - ====关闭缓存====
+20:34:32.685 [Thread-48] INFO  sys-user - [shutdownAsyncManager,62] - ====关闭后台任务任务线程池====
+20:34:32.691 [Thread-48] INFO  sys-user - [shutdownEhCacheManager,75] - ====关闭缓存====
