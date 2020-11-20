@@ -3,6 +3,7 @@ package com.ruoyi.system.mapper;
 
 import com.ruoyi.common.core.domain.entity.SysUserSalary;
 import com.ruoyi.common.core.domain.entity.SysUserSalaryExample;
+import com.ruoyi.common.core.domain.req.ReqUserSalary;
 import com.ruoyi.common.core.domain.resp.RespUserSalary;
 import org.apache.ibatis.annotations.Param;
 
@@ -28,6 +29,8 @@ public interface SysUserSalaryMapper {
 
     List<RespUserSalary> selectByExampleResp(SysUserSalaryExample example);
 
+    List<RespUserSalary> selectByCondition(ReqUserSalary reqUserSalary);
+
     SysUserSalary selectByPrimaryKey(Long id);
 
     int updateByExampleSelective(@Param("record") SysUserSalary record, @Param("example") SysUserSalaryExample example);
@@ -35,6 +38,8 @@ public interface SysUserSalaryMapper {
     int updateByExample(@Param("record") SysUserSalary record, @Param("example") SysUserSalaryExample example);
 
     int updateByPrimaryKeySelective(SysUserSalary record);
+
+    int deleteUserByIds(Long[] ids);
 
     int updateByPrimaryKey(SysUserSalary record);
 }

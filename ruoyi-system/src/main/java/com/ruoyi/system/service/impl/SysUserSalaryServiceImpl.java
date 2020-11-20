@@ -1,8 +1,11 @@
 package com.ruoyi.system.service.impl;
 
+import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.domain.entity.SysUserSalary;
 import com.ruoyi.common.core.domain.entity.SysUserSalaryExample;
+import com.ruoyi.common.core.domain.req.ReqUserSalary;
 import com.ruoyi.common.core.domain.resp.RespUserSalary;
+import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.system.mapper.SysUserSalaryMapper;
 import com.ruoyi.system.service.ISysUserSalaryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +65,11 @@ public class SysUserSalaryServiceImpl implements ISysUserSalaryService {
         return sysUserSalaryMapper.selectByPrimaryKey(id);
     }
 
+    @Override
+    public List<RespUserSalary> selectByCondition(ReqUserSalary reqUserSalary) {
+        return sysUserSalaryMapper.selectByCondition(reqUserSalary);
+    }
+
 
     public int updateByExampleSelective(SysUserSalary record,SysUserSalaryExample example) {
         return sysUserSalaryMapper.updateByExampleSelective(record,example);
@@ -75,6 +83,12 @@ public class SysUserSalaryServiceImpl implements ISysUserSalaryService {
 
     public int updateByPrimaryKeySelective(SysUserSalary record) {
         return sysUserSalaryMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
+    public int deleteUserByIds(String ids) {
+        Long[] salaryIds = Convert.toLongArray(ids);
+        return sysUserSalaryMapper.deleteUserByIds(salaryIds);
     }
 
 

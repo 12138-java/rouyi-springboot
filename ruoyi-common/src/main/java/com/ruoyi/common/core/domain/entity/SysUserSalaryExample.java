@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * @auther:caishihao
- * @Creation time:2020/11/19 15:42
+ * @Creation time:2020/11/20 11:05
  * @description:
  */
 public class SysUserSalaryExample {
@@ -240,52 +240,52 @@ public class SysUserSalaryExample {
             return (Criteria) this;
         }
 
-        public Criteria andBasicEqualTo(Double value) {
+        public Criteria andBasicEqualTo(Integer value) {
             addCriterion("basic =", value, "basic");
             return (Criteria) this;
         }
 
-        public Criteria andBasicNotEqualTo(Double value) {
+        public Criteria andBasicNotEqualTo(Integer value) {
             addCriterion("basic <>", value, "basic");
             return (Criteria) this;
         }
 
-        public Criteria andBasicGreaterThan(Double value) {
+        public Criteria andBasicGreaterThan(Integer value) {
             addCriterion("basic >", value, "basic");
             return (Criteria) this;
         }
 
-        public Criteria andBasicGreaterThanOrEqualTo(Double value) {
+        public Criteria andBasicGreaterThanOrEqualTo(Integer value) {
             addCriterion("basic >=", value, "basic");
             return (Criteria) this;
         }
 
-        public Criteria andBasicLessThan(Double value) {
+        public Criteria andBasicLessThan(Integer value) {
             addCriterion("basic <", value, "basic");
             return (Criteria) this;
         }
 
-        public Criteria andBasicLessThanOrEqualTo(Double value) {
+        public Criteria andBasicLessThanOrEqualTo(Integer value) {
             addCriterion("basic <=", value, "basic");
             return (Criteria) this;
         }
 
-        public Criteria andBasicIn(List<Double> values) {
+        public Criteria andBasicIn(List<Integer> values) {
             addCriterion("basic in", values, "basic");
             return (Criteria) this;
         }
 
-        public Criteria andBasicNotIn(List<Double> values) {
+        public Criteria andBasicNotIn(List<Integer> values) {
             addCriterion("basic not in", values, "basic");
             return (Criteria) this;
         }
 
-        public Criteria andBasicBetween(Double value1, Double value2) {
+        public Criteria andBasicBetween(Integer value1, Integer value2) {
             addCriterion("basic between", value1, value2, "basic");
             return (Criteria) this;
         }
 
-        public Criteria andBasicNotBetween(Double value1, Double value2) {
+        public Criteria andBasicNotBetween(Integer value1, Integer value2) {
             addCriterion("basic not between", value1, value2, "basic");
             return (Criteria) this;
         }
@@ -300,52 +300,52 @@ public class SysUserSalaryExample {
             return (Criteria) this;
         }
 
-        public Criteria andPerformanceEqualTo(Double value) {
+        public Criteria andPerformanceEqualTo(Integer value) {
             addCriterion("performance =", value, "performance");
             return (Criteria) this;
         }
 
-        public Criteria andPerformanceNotEqualTo(Double value) {
+        public Criteria andPerformanceNotEqualTo(Integer value) {
             addCriterion("performance <>", value, "performance");
             return (Criteria) this;
         }
 
-        public Criteria andPerformanceGreaterThan(Double value) {
+        public Criteria andPerformanceGreaterThan(Integer value) {
             addCriterion("performance >", value, "performance");
             return (Criteria) this;
         }
 
-        public Criteria andPerformanceGreaterThanOrEqualTo(Double value) {
+        public Criteria andPerformanceGreaterThanOrEqualTo(Integer value) {
             addCriterion("performance >=", value, "performance");
             return (Criteria) this;
         }
 
-        public Criteria andPerformanceLessThan(Double value) {
+        public Criteria andPerformanceLessThan(Integer value) {
             addCriterion("performance <", value, "performance");
             return (Criteria) this;
         }
 
-        public Criteria andPerformanceLessThanOrEqualTo(Double value) {
+        public Criteria andPerformanceLessThanOrEqualTo(Integer value) {
             addCriterion("performance <=", value, "performance");
             return (Criteria) this;
         }
 
-        public Criteria andPerformanceIn(List<Double> values) {
+        public Criteria andPerformanceIn(List<Integer> values) {
             addCriterion("performance in", values, "performance");
             return (Criteria) this;
         }
 
-        public Criteria andPerformanceNotIn(List<Double> values) {
+        public Criteria andPerformanceNotIn(List<Integer> values) {
             addCriterion("performance not in", values, "performance");
             return (Criteria) this;
         }
 
-        public Criteria andPerformanceBetween(Double value1, Double value2) {
+        public Criteria andPerformanceBetween(Integer value1, Integer value2) {
             addCriterion("performance between", value1, value2, "performance");
             return (Criteria) this;
         }
 
-        public Criteria andPerformanceNotBetween(Double value1, Double value2) {
+        public Criteria andPerformanceNotBetween(Integer value1, Integer value2) {
             addCriterion("performance not between", value1, value2, "performance");
             return (Criteria) this;
         }
@@ -407,6 +407,66 @@ public class SysUserSalaryExample {
 
         public Criteria andCreatetimeNotBetween(Date value1, Date value2) {
             addCriterion("createTime not between", value1, value2, "createtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagIsNull() {
+            addCriterion("del_flag is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagIsNotNull() {
+            addCriterion("del_flag is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagEqualTo(Integer value) {
+            addCriterion("del_flag =", value, "delFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagNotEqualTo(Integer value) {
+            addCriterion("del_flag <>", value, "delFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagGreaterThan(Integer value) {
+            addCriterion("del_flag >", value, "delFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagGreaterThanOrEqualTo(Integer value) {
+            addCriterion("del_flag >=", value, "delFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagLessThan(Integer value) {
+            addCriterion("del_flag <", value, "delFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagLessThanOrEqualTo(Integer value) {
+            addCriterion("del_flag <=", value, "delFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagIn(List<Integer> values) {
+            addCriterion("del_flag in", values, "delFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagNotIn(List<Integer> values) {
+            addCriterion("del_flag not in", values, "delFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagBetween(Integer value1, Integer value2) {
+            addCriterion("del_flag between", value1, value2, "delFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelFlagNotBetween(Integer value1, Integer value2) {
+            addCriterion("del_flag not between", value1, value2, "delFlag");
             return (Criteria) this;
         }
     }

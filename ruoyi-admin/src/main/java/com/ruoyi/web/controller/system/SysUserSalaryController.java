@@ -1,20 +1,16 @@
 package com.ruoyi.web.controller.system;
 
 import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.core.domain.entity.SysRole;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.domain.entity.SysUserSalary;
 import com.ruoyi.common.core.domain.entity.SysUserSalaryExample;
+import com.ruoyi.common.core.domain.req.ReqUserSalary;
 import com.ruoyi.common.core.domain.resp.RespUserSalary;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.common.utils.ShiroUtils;
-import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.framework.shiro.service.SysPasswordService;
 import com.ruoyi.system.service.ISysPostService;
 import com.ruoyi.system.service.ISysRoleService;
 import com.ruoyi.system.service.ISysUserSalaryService;
@@ -25,11 +21,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * 用户信息
@@ -44,6 +38,13 @@ public class SysUserSalaryController extends BaseController
 
     @Autowired
     private ISysUserService userService;
+
+    @Autowired
+    private ISysRoleService roleService;
+
+    @Autowired
+    private ISysPostService postService;
+
 
     @Autowired
     private ISysUserSalaryService sysUserSalaryService;
@@ -71,22 +72,37 @@ public class SysUserSalaryController extends BaseController
         }else{
             return sysUsers;
         }
+    }
 
-
+    /**
+     * 删除数据（伪删除）
+     * @param ids
+     * @return
+     */
+    @RequiresPermissions("system:salary:remove")
+    @Log(title = "工资管理", businessType = BusinessType.DELETE)
+    @PostMapping("/remove")
+    @ResponseBody
+    public AjaxResult remove(String ids)
+    {
+        try
+        {
+            return toAjax(sysUserSalaryService.deleteUserByIds(ids));
+        }
+        catch (Exception e)
+        {
+            return error(e.getMessage());
+        }
     }
 
     @RequiresPermissions("system:salary:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list() {
-        SysUserSalaryExample example = new SysUserSalaryExample();
-        SysUserSalaryExample.Criteria criteria = example.createCriteria();
-        List<RespUserSalary> respUserSalaries = sysUserSalaryService.selectByExampleResp(example);
+    public TableDataInfo list(@Validated ReqUserSalary reqUserSalary) {
 
-        for (RespUserSalary respUserSalary : respUserSalaries) {
-            SysUser sysUser = userService.selectUserById(respUserSalary.getSysUserId());
-            respUserSalary.setSysUserName(sysUser.getUserName());
-        }
+        List<RespUserSalary> respUserSalaries = sysUserSalaryService.selectByCondition(reqUserSalary);
+
+
         return getDataTable(respUserSalaries);
     }
 
@@ -111,9 +127,84 @@ public class SysUserSalaryController extends BaseController
         }else if(sysUserSalaryService.selectByPrimaryKey(sysUserSalary.getSysUserId()) != null){
             return error("该员工工资数据已存在");
         }
-        sysUserSalary.setSysUserId(Long.valueOf(3));
 
         return toAjax(sysUserSalaryService.insertSelective(sysUserSalary));
 
+    }
+
+//    /**
+//     * 修改用户
+//     */
+//    @GetMapping("/edit/{salaryId}")
+//    public String edit(@PathVariable("salaryId") Long salaryId)
+//    {
+//        ModelMap modelMap = new ModelMap();
+//        SysUserSalaryExample example = new SysUserSalaryExample();
+//        SysUserSalaryExample.Criteria criteria = example.createCriteria();
+//        criteria.andIdEqualTo(salaryId);
+//        List<RespUserSalary> respUserSalaries = sysUserSalaryService.selectByExampleResp(example);
+//        modelMap.put("userName", respUserSalaries.get(0).getSysUserName());
+//        modelMap.put("userId", respUserSalaries.get(0).getSysUserId());
+//        modelMap.put("basic", respUserSalaries.get(0).getBasic());
+//        modelMap.put("performance", respUserSalaries.get(0).getPerformance());
+//        return "system/salary/edit";
+//    }
+
+
+    /**
+     * 到修改用户界面，回显数据
+     */
+    @GetMapping("/edit/{salaryId}")
+    public String edit(@PathVariable("salaryId") Long salaryId, ModelMap modelMap) {
+        SysUserSalaryExample example = new SysUserSalaryExample();
+        SysUserSalaryExample.Criteria criteria = example.createCriteria();
+        criteria.andIdEqualTo(salaryId);
+        List<RespUserSalary> respUserSalaries = sysUserSalaryService.selectByExampleResp(example);
+
+        for (RespUserSalary respUserSalary : respUserSalaries) {
+            SysUser sysUser = userService.selectUserById(respUserSalary.getSysUserId());
+            respUserSalary.setSysUserName(sysUser.getUserName());
+        }
+
+        modelMap.put("id", respUserSalaries.get(0).getId());
+        modelMap.put("userName", respUserSalaries.get(0).getSysUserName());
+        modelMap.put("userId", respUserSalaries.get(0).getSysUserId());
+        modelMap.put("basic", respUserSalaries.get(0).getBasic());
+        modelMap.put("performance", respUserSalaries.get(0).getPerformance());
+        return prefix + "/edit";
+    }
+
+    @Log(title = "工资管理", businessType = BusinessType.EXPORT)
+    @RequiresPermissions("system:salary:export")
+    @PostMapping("/export")
+    @ResponseBody
+    public AjaxResult export(SysUserSalary sysUserSalary)
+    {
+        SysUserSalaryExample example = new SysUserSalaryExample();
+        SysUserSalaryExample.Criteria criteria = example.createCriteria();
+        List<RespUserSalary> respUserSalaries = sysUserSalaryService.selectByExampleResp(example);
+
+        for (RespUserSalary respUserSalary : respUserSalaries) {
+            SysUser sysUser = userService.selectUserById(respUserSalary.getSysUserId());
+            respUserSalary.setSysUserName(sysUser.getUserName());
+        }
+        ExcelUtil<RespUserSalary> util = new ExcelUtil<RespUserSalary>(RespUserSalary.class);
+        return util.exportExcel(respUserSalaries, "用户工资数据");
+    }
+
+    /**
+     * 修改保存用户
+     */
+    @RequiresPermissions("system:salary:edit")
+    @Log(title = "工资管理", businessType = BusinessType.UPDATE)
+    @PostMapping("/edit")
+    @ResponseBody
+    public AjaxResult editSave(@Validated ReqUserSalary reqUserSalary)
+    {
+        SysUserSalary sysUserSalary = new SysUserSalary();
+        sysUserSalary.setId(reqUserSalary.getId());
+        sysUserSalary.setBasic(Integer.parseInt(reqUserSalary.getBasic()));
+        sysUserSalary.setPerformance(Integer.parseInt(reqUserSalary.getPerformance()));
+        return toAjax(sysUserSalaryService.updateByPrimaryKeySelective(sysUserSalary));
     }
 }

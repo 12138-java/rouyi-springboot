@@ -4,7 +4,7 @@ import java.util.Date;
 
 /**
  * @auther:caishihao
- * @Creation time:2020/11/19 15:42
+ * @Creation time:2020/11/20 11:05
  * @description:
  */
 
@@ -12,21 +12,35 @@ import java.util.Date;
  * 员工薪资表
  */
 public class SysUserSalary {
+    /**
+     * 工资id
+     */
     private Long id;
 
+    /**
+     * 用户id
+     */
     private Long sysUserId;
 
     /**
      * 基本工资
      */
-    private Double basic;
+    private Integer basic;
 
     /**
      * 绩效
      */
-    private Double performance;
+    private Integer performance;
 
+    /**
+     * 创建时间
+     */
     private Date createtime;
+
+    /**
+     * 0删除 1未删除
+     */
+    private Integer delFlag;
 
     public Long getId() {
         return id;
@@ -44,19 +58,19 @@ public class SysUserSalary {
         this.sysUserId = sysUserId;
     }
 
-    public Double getBasic() {
+    public Integer getBasic() {
         return basic;
     }
 
-    public void setBasic(Double basic) {
+    public void setBasic(Integer basic) {
         this.basic = basic;
     }
 
-    public Double getPerformance() {
+    public Integer getPerformance() {
         return performance;
     }
 
-    public void setPerformance(Double performance) {
+    public void setPerformance(Integer performance) {
         this.performance = performance;
     }
 
@@ -66,6 +80,14 @@ public class SysUserSalary {
 
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
+    }
+
+    public Integer getDelFlag() {
+        return delFlag;
+    }
+
+    public void setDelFlag(Integer delFlag) {
+        this.delFlag = delFlag;
     }
 
     @Override
@@ -79,18 +101,8 @@ public class SysUserSalary {
         sb.append(", basic=").append(basic);
         sb.append(", performance=").append(performance);
         sb.append(", createtime=").append(createtime);
+        sb.append(", delFlag=").append(delFlag);
         sb.append("]");
         return sb.toString();
-    }
-
-    public SysUserSalary() {
-    }
-
-    public SysUserSalary(Long id, Long sysUserId, Double basic, Double performance, Date createtime) {
-        this.id = id;
-        this.sysUserId = sysUserId;
-        this.basic = basic;
-        this.performance = performance;
-        this.createtime = createtime;
     }
 }
