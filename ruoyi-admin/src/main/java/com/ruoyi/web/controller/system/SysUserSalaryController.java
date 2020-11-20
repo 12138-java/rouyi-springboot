@@ -9,6 +9,7 @@ import com.ruoyi.common.core.domain.entity.SysUserSalaryExample;
 import com.ruoyi.common.core.domain.req.ReqUserSalary;
 import com.ruoyi.common.core.domain.resp.RespUserSalary;
 import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.service.ISysPostService;
@@ -87,7 +88,11 @@ public class SysUserSalaryController extends BaseController
     {
         try
         {
-            return toAjax(sysUserSalaryService.deleteUserByIds(ids));
+            Long[] salaryIds = Convert.toLongArray(ids);
+            for (Long salaryId : salaryIds) {
+                sysUserSalaryService.deleteByPrimaryKey(salaryId);
+            }
+            return toAjax(1);
         }
         catch (Exception e)
         {
