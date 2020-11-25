@@ -16,8 +16,8 @@ public class RuoYiApplication
     {
         // System.setProperty("spring.devtools.restart.enabled", "false");
         SpringApplication.run(RuoYiApplication.class, args);
-        System.out.println("(♥◠‿◠)ﾉﾞ  若依kinwgan启动成功   ლ(´ڡ`ლ)ﾞ  \n");
-        System.out.println("(♥◠‿◠)ﾉﾞ  若依启动成功111111111   ლ(´ڡ`ლ)ﾞ  \n" +
+        System.out.println("(♥ss◠sss◠)ﾉ若222222222依kin2sasdasd2222ew raan2启动成功ლ(´ڡ`ლ)ﾞ  \n");
+        System.out.println("(♥◠‿◠)ﾉﾞ  若ssss依ssss启动成daawedwdaw功11231231asedaw111   ლ(´ڡ`ლ)ﾞ  \n" +
                 " .-------.       ____     __        \n" +
                 " |  _ _   \\      \\   \\   /  /    \n" +
                 " | ( ' )  |   asdasd    \\  _. /  '       \n" +
