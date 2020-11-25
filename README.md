@@ -1,5 +1,6 @@
 1. sql文件路径：RuoYi/ry.sql
 2. 新表：sys_user_salary(员工薪资表)
+![binaryTree](README_PICTURE/QQ20201125-152101.png "binaryTree")
 3. sys_user_salary表与sys_user用户信息表相关联
 4. 新增工资管理，工资管理中的组织机构还没做
 5. 列表渲染
