@@ -21,16 +21,56 @@ public class RespUserSalary {
      * 基本工资
      */
     @Excel(name = "基本工资")
-    private Double basic;
+    private int basic;
 
     /**
      * 绩效
      */
     @Excel(name = "绩效")
-    private Double performance;
+    private int performance;
 
-    @Excel(name = "创建时间")
-    private Date createtime;
+    @Excel(name = "创建时间",dateFormat="yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
+
+    /**
+     * 创建者
+     */
+    @Excel(name = "创建者")
+    private String creator;
+
+    /**
+     * 更新时间
+     */
+    @Excel(name = "更新时间",dateFormat="yyyy-MM-dd HH:mm:ss")
+    private Date updateTime;
+
+    /**
+     * 更新者
+     */
+    @Excel(name = "更新者")
+    private String regenerator;
+
+    /**
+     * 备注
+     */
+    @Excel(name = "备注")
+    private String remark;
+
+    public RespUserSalary(Long id, Long sysUserId, String sysUserName, int basic, int performance, Date createTime, String creator, Date updateTime, String regenerator, String remark) {
+        this.id = id;
+        this.sysUserId = sysUserId;
+        this.sysUserName = sysUserName;
+        this.basic = basic;
+        this.performance = performance;
+        this.createTime = createTime;
+        this.creator = creator;
+        this.updateTime = updateTime;
+        this.regenerator = regenerator;
+        this.remark = remark;
+    }
+
+    public RespUserSalary() {
+    }
 
     public Long getId() {
         return id;
@@ -56,41 +96,59 @@ public class RespUserSalary {
         this.sysUserName = sysUserName;
     }
 
-    public Double getBasic() {
+    public int getBasic() {
         return basic;
     }
 
-    public void setBasic(Double basic) {
+    public void setBasic(int basic) {
         this.basic = basic;
     }
 
-    public Double getPerformance() {
+    public int getPerformance() {
         return performance;
     }
 
-    public void setPerformance(Double performance) {
+    public void setPerformance(int performance) {
         this.performance = performance;
     }
 
-
-
-    public Date getCreatetime() {
-        return createtime;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
-    public RespUserSalary(Long id, Long sysUserId, String sysUserName, Double basic, Double performance, Date createtime) {
-        this.id = id;
-        this.sysUserId = sysUserId;
-        this.sysUserName = sysUserName;
-        this.basic = basic;
-        this.performance = performance;
-        this.createtime = createtime;
+    public String getCreator() {
+        return creator;
     }
 
-    public RespUserSalary() {
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getRegenerator() {
+        return regenerator;
+    }
+
+    public void setRegenerator(String regenerator) {
+        this.regenerator = regenerator;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }

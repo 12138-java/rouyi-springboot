@@ -8,8 +8,12 @@
     <result column="sys_user_id" jdbcType="BIGINT" property="sysUserId" />
     <result column="basic" jdbcType="INTEGER" property="basic" />
     <result column="performance" jdbcType="INTEGER" property="performance" />
-    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
     <result column="del_flag" jdbcType="INTEGER" property="delFlag" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="regenerator" jdbcType="VARCHAR" property="regenerator" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
   </resultMap>
   <resultMap id="BaseResultMap1" type="com.ruoyi.common.core.domain.resp.RespUserSalary">
     <!--@mbg.generated-->
@@ -19,7 +23,11 @@
     <result column="user_name" jdbcType="VARCHAR" property="sysUserName" />
     <result column="basic" jdbcType="DOUBLE" property="basic" />
     <result column="performance" jdbcType="DOUBLE" property="performance" />
-    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="regenerator" jdbcType="VARCHAR" property="regenerator" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--@mbg.generated-->
@@ -83,7 +91,8 @@
   </sql>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, sys_user_id, basic, performance, createTime, del_flag
+    id, sys_user_id, basic, performance, create_time, creator, del_flag, update_time, 
+    regenerator, remark
   </sql>
   <select id="selectByExample" parameterType="com.ruoyi.common.core.domain.entity.SysUserSalaryExample" resultMap="BaseResultMap">
     <!--@mbg.generated-->
@@ -117,11 +126,11 @@
   </select>
   <select id="selectByCondition" parameterType="com.ruoyi.common.core.domain.req.ReqUserSalary" resultMap="BaseResultMap1">
     SELECT
-        suer.user_name,
-        salary.*
+    suer.user_name,
+    salary.*
     FROM
-        sys_user suer
-        INNER JOIN sys_user_salary salary ON suer.user_id = salary.sys_user_id
+    sys_user suer
+    INNER JOIN sys_user_salary salary ON suer.user_id = salary.sys_user_id
     <where>
       <if test="sysUserName != null and sysUserName != ''">
         suer.user_name like concat('%', #{sysUserName,jdbcType=VARCHAR}, '%')
@@ -153,9 +162,13 @@
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.ruoyi.common.core.domain.entity.SysUserSalary" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into sys_user_salary (sys_user_id, basic, performance, 
-      createTime, del_flag)
+      create_time, creator, del_flag, 
+      update_time, regenerator, remark
+      )
     values (#{sysUserId,jdbcType=BIGINT}, #{basic,jdbcType=INTEGER}, #{performance,jdbcType=INTEGER}, 
-      #{createtime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=INTEGER})
+      #{createTime,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR}, #{delFlag,jdbcType=INTEGER}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{regenerator,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.ruoyi.common.core.domain.entity.SysUserSalary" useGeneratedKeys="true">
     <!--@mbg.generated-->
@@ -170,11 +183,23 @@
       <if test="performance != null">
         performance,
       </if>
-      <if test="createtime != null">
-        createTime,
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="creator != null">
+        creator,
       </if>
       <if test="delFlag != null">
         del_flag,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="regenerator != null">
+        regenerator,
+      </if>
+      <if test="remark != null">
+        remark,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -187,11 +212,23 @@
       <if test="performance != null">
         #{performance,jdbcType=INTEGER},
       </if>
-      <if test="createtime != null">
-        #{createtime,jdbcType=TIMESTAMP},
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
       </if>
       <if test="delFlag != null">
         #{delFlag,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="regenerator != null">
+        #{regenerator,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -218,11 +255,23 @@
       <if test="record.performance != null">
         performance = #{record.performance,jdbcType=INTEGER},
       </if>
-      <if test="record.createtime != null">
-        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creator != null">
+        creator = #{record.creator,jdbcType=VARCHAR},
       </if>
       <if test="record.delFlag != null">
         del_flag = #{record.delFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.regenerator != null">
+        regenerator = #{record.regenerator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -236,8 +285,12 @@
       sys_user_id = #{record.sysUserId,jdbcType=BIGINT},
       basic = #{record.basic,jdbcType=INTEGER},
       performance = #{record.performance,jdbcType=INTEGER},
-      createTime = #{record.createtime,jdbcType=TIMESTAMP},
-      del_flag = #{record.delFlag,jdbcType=INTEGER}
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      creator = #{record.creator,jdbcType=VARCHAR},
+      del_flag = #{record.delFlag,jdbcType=INTEGER},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      regenerator = #{record.regenerator,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -255,11 +308,23 @@
       <if test="performance != null">
         performance = #{performance,jdbcType=INTEGER},
       </if>
-      <if test="createtime != null">
-        createTime = #{createtime,jdbcType=TIMESTAMP},
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
       </if>
       <if test="delFlag != null">
         del_flag = #{delFlag,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="regenerator != null">
+        regenerator = #{regenerator,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -276,8 +341,12 @@
     set sys_user_id = #{sysUserId,jdbcType=BIGINT},
       basic = #{basic,jdbcType=INTEGER},
       performance = #{performance,jdbcType=INTEGER},
-      createTime = #{createtime,jdbcType=TIMESTAMP},
-      del_flag = #{delFlag,jdbcType=INTEGER}
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      regenerator = #{regenerator,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

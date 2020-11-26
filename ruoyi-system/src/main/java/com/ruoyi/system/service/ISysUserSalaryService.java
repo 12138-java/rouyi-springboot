@@ -28,11 +28,15 @@ public interface ISysUserSalaryService
 
     List<SysUserSalary> selectByExample(SysUserSalaryExample example);
 
+
     List<RespUserSalary> selectByExampleResp(SysUserSalaryExample example);
+
 
     SysUserSalary selectByPrimaryKey(Long id);
 
+
     List<RespUserSalary> selectByCondition(ReqUserSalary reqUserSalary);
+
 
     int updateByExampleSelective(SysUserSalary record,SysUserSalaryExample example);
 

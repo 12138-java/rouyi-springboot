@@ -11,19 +11,28 @@ import com.ruoyi.common.core.domain.resp.RespUserSalary;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.ShiroUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.service.ISysPostService;
 import com.ruoyi.system.service.ISysRoleService;
 import com.ruoyi.system.service.ISysUserSalaryService;
 import com.ruoyi.system.service.ISysUserService;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,12 +48,6 @@ public class SysUserSalaryController extends BaseController
 
     @Autowired
     private ISysUserService userService;
-
-    @Autowired
-    private ISysRoleService roleService;
-
-    @Autowired
-    private ISysPostService postService;
 
 
     @Autowired
@@ -133,34 +136,19 @@ public class SysUserSalaryController extends BaseController
             return error("该员工工资数据已存在");
         }
 
+        sysUserSalary.setCreateTime(new Date());
+        String loginName = ShiroUtils.getLoginName();
+        sysUserSalary.setCreator(loginName);
         return toAjax(sysUserSalaryService.insertSelective(sysUserSalary));
 
     }
-
-//    /**
-//     * 修改用户
-//     */
-//    @GetMapping("/edit/{salaryId}")
-//    public String edit(@PathVariable("salaryId") Long salaryId)
-//    {
-//        ModelMap modelMap = new ModelMap();
-//        SysUserSalaryExample example = new SysUserSalaryExample();
-//        SysUserSalaryExample.Criteria criteria = example.createCriteria();
-//        criteria.andIdEqualTo(salaryId);
-//        List<RespUserSalary> respUserSalaries = sysUserSalaryService.selectByExampleResp(example);
-//        modelMap.put("userName", respUserSalaries.get(0).getSysUserName());
-//        modelMap.put("userId", respUserSalaries.get(0).getSysUserId());
-//        modelMap.put("basic", respUserSalaries.get(0).getBasic());
-//        modelMap.put("performance", respUserSalaries.get(0).getPerformance());
-//        return "system/salary/edit";
-//    }
 
 
     /**
      * 到修改用户界面，回显数据
      */
     @GetMapping("/edit/{salaryId}")
-    public String edit(@PathVariable("salaryId") Long salaryId, ModelMap modelMap) {
+    public String edit(@PathVariable("salaryId") Long salaryId, ModelMap modelMap)  {
         SysUserSalaryExample example = new SysUserSalaryExample();
         SysUserSalaryExample.Criteria criteria = example.createCriteria();
         criteria.andIdEqualTo(salaryId);
@@ -171,20 +159,46 @@ public class SysUserSalaryController extends BaseController
             respUserSalary.setSysUserName(sysUser.getUserName());
         }
 
-        modelMap.put("id", respUserSalaries.get(0).getId());
-        modelMap.put("userName", respUserSalaries.get(0).getSysUserName());
-        modelMap.put("userId", respUserSalaries.get(0).getSysUserId());
-        modelMap.put("basic", respUserSalaries.get(0).getBasic());
-        modelMap.put("performance", respUserSalaries.get(0).getPerformance());
+        try {
+            modelMap.put("id", respUserSalaries.get(0).getId());
+            modelMap.put("userName", respUserSalaries.get(0).getSysUserName());
+            modelMap.put("userId", respUserSalaries.get(0).getSysUserId());
+            modelMap.put("basic", respUserSalaries.get(0).getBasic());
+            modelMap.put("performance", respUserSalaries.get(0).getPerformance());
+            modelMap.put("createTime", dateConversion(respUserSalaries.get(0).getCreateTime()));
+            modelMap.put("creator", respUserSalaries.get(0).getCreator());
+            modelMap.put("updateTime", dateConversion(respUserSalaries.get(0).getUpdateTime()));
+            modelMap.put("regenerator", respUserSalaries.get(0).getRegenerator());
+            modelMap.put("remark", respUserSalaries.get(0).getRemark());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         return prefix + "/edit";
+    }
+
+    /**
+     * 时间转为yyyy-MM-dd HH:mm:ss
+     * @param date
+     * @return
+     * @throws ParseException
+     */
+    public String dateConversion(Date date) {
+        String formatStr2 = null;
+        try {
+            formatStr2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return formatStr2;
     }
 
     @Log(title = "工资管理", businessType = BusinessType.EXPORT)
     @RequiresPermissions("system:salary:export")
     @PostMapping("/export")
     @ResponseBody
-    public AjaxResult export(SysUserSalary sysUserSalary)
-    {
+    public AjaxResult export(SysUserSalary sysUserSalary) {
         SysUserSalaryExample example = new SysUserSalaryExample();
         SysUserSalaryExample.Criteria criteria = example.createCriteria();
         List<RespUserSalary> respUserSalaries = sysUserSalaryService.selectByExampleResp(example);
@@ -204,12 +218,10 @@ public class SysUserSalaryController extends BaseController
     @Log(title = "工资管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(@Validated ReqUserSalary reqUserSalary)
-    {
-        SysUserSalary sysUserSalary = new SysUserSalary();
-        sysUserSalary.setId(reqUserSalary.getId());
-        sysUserSalary.setBasic(Integer.parseInt(reqUserSalary.getBasic()));
-        sysUserSalary.setPerformance(Integer.parseInt(reqUserSalary.getPerformance()));
+    public AjaxResult editSave(@Validated SysUserSalary sysUserSalary) {
+        sysUserSalary.setUpdateTime(new Date());
+        String loginName = ShiroUtils.getLoginName();
+        sysUserSalary.setRegenerator(loginName);
         return toAjax(sysUserSalaryService.updateByPrimaryKeySelective(sysUserSalary));
     }
 }

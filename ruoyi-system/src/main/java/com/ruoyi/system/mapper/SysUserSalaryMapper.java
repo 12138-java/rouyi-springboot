@@ -5,7 +5,9 @@ import com.ruoyi.common.core.domain.entity.SysUserSalary;
 import com.ruoyi.common.core.domain.entity.SysUserSalaryExample;
 import com.ruoyi.common.core.domain.req.ReqUserSalary;
 import com.ruoyi.common.core.domain.resp.RespUserSalary;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 

@@ -25,7 +25,7 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label is-required">基本工资：</label>
                         <div class="col-sm-8">
-                            <input id="basic" name="basic" th:value="${basic}" placeholder="0.00" class="form-control" type="text" maxlength="30" required>
+                            <input id="basic" name="basic" th:value="${basic}" placeholder="0" class="form-control" type="text" maxlength="30" required>
                         </div>
                     </div>
                 </div>
@@ -34,13 +34,62 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label class="col-sm-4 control-label is-required">津贴：</label>
+                        <label class="col-sm-4 control-label is-required">绩效：</label>
                         <div class="col-sm-8">
-                            <input id="performance" th:value="${performance}" name="performance" placeholder="0.00" class="form-control" type="text" maxlength="30" required>
+                            <input id="performance" th:value="${performance}" name="performance" placeholder="0" class="form-control" type="text" maxlength="30" required>
                         </div>
                     </div>
                 </div>
-
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label is-required">创建时间：</label>
+                        <div class="col-sm-8">
+                            <input id="create_time" th:value="${createTime}" readonly name="createTime" placeholder="" class="form-control" type="text" maxlength="30" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label is-required">创建者：</label>
+                        <div class="col-sm-8">
+                                <input id="creator" th:value="${creator}" readonly name="creator" placeholder="" class="form-control" type="text" maxlength="30" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label is-required">修改时间：</label>
+                        <div class="col-sm-8">
+                            <input id="update_time" th:value="${updateTime}" readonly  name="updateTime" placeholder="" class="form-control" type="text" maxlength="30" >
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label is-required">修改者：</label>
+                        <div class="col-sm-8">
+                            <input id="regenerator" th:value="${regenerator}" readonly name="regenerator" placeholder="" class="form-control" type="text" maxlength="30" >
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label is-required">备注：</label>
+                        <div class="col-sm-8">
+                            <input id="remark" th:value="${remark}" name="remark" placeholder="" class="form-control" type="text" maxlength="30" >
+                        </div>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
