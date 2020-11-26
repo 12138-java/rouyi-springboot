@@ -8,7 +8,7 @@
 ![](https://i.loli.net/2020/11/25/YvcyFe7K9Jr25DS.png)
 6. 删除数据，原本想做伪删除，一个字段0为删除，1为未删除，后面发现不合理
 ![](https://i.loli.net/2020/11/26/V6LueOAEaBpNwbx.png)
-7. 编辑
+7. 编辑数据
 ![](https://i.loli.net/2020/11/26/FHlq6wWMsCE7Qh9.png)
 8. 通过对姓名进行模糊查询
 9. 导出表格数据,时间格式出现问题，在对象类中@Excel，添加dateFormat="yyyy-MM-dd HH:mm:ss")的属性

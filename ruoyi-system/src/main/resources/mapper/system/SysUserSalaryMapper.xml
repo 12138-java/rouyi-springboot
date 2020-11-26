@@ -135,9 +135,9 @@
       <if test="sysUserName != null and sysUserName != ''">
         suer.user_name like concat('%', #{sysUserName,jdbcType=VARCHAR}, '%')
       </if>
-      <if test="id == null or id == ''">
-        salary.del_flag = 1
-      </if>
+<!--      <if test="id == null or id ==''">-->
+<!--        salary.del_flag = 1-->
+<!--      </if>-->
     </where>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
